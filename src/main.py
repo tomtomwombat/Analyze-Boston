@@ -135,7 +135,21 @@ for street in street_map.streets.values():
                                                end_lat, end_long,
                                                fill=color, width=1))
     street_lines[(street.node1, street.node2)] = street_shape
-
+def redraw_directions(path):
+    for d in directions:
+        canvas.delete(d)
+    y = 105
+    prev_street_name = None
+    for i in range(1, len(path)):
+        street = street_map.streets[tuple(sorted((path[i-1],path[i])))]
+        name = ' '.join(street.name.split('__')[0].split('_'))
+        if name == prev_street_name: continue
+        current_date_text = canvas.create_text(WIDTH - 100,y,fill="white",
+                                       font="Times 15 italic bold",
+                                       text=name)
+        directions.append(current_date_text)
+        y+=17
+        prev_street_name = name
 
 def delete_path(path):
     for i in range(1, len(path)):
@@ -155,7 +169,8 @@ def color_path(path):
 
         for(ID) in street_lines[(street.node1,street.node2)]:
             canvas.itemconfig(ID, fill='cyan', width=3)
-
+            
+tkinter.Label(window, text="Date:").pack()
 date_scale = tkinter.Scale(window, from_=0, to=len(dates)-1, orient='horizontal')
 date_scale.pack()
 
@@ -167,6 +182,7 @@ def rand_src():
     delete_path(path)
     path = graph.dijkstra(SRC, DEST)
     color_path(path)
+    redraw_directions(path)
 
 def rand_dest():
     global DEST, path
@@ -174,6 +190,7 @@ def rand_dest():
     delete_path(path)
     path = graph.dijkstra(SRC, DEST)
     color_path(path)
+    redraw_directions(path)
 
 src_button = tkinter.Button(window, text='Random Start', command=rand_src)
 dest_button = tkinter.Button(window, text='Random Destination', command=rand_dest)
@@ -181,9 +198,17 @@ dest_button = tkinter.Button(window, text='Random Destination', command=rand_des
 src_button.pack()
 dest_button.pack()
 
-
+tkinter.Label(window, text="% Crime weight").pack()
 weight_scale = tkinter.Scale(window, from_=0, to=100, orient='horizontal')
 weight_scale.pack()
+
+current_date_text = canvas.create_text(WIDTH - 150,40,fill="white",
+                                       font="Times 20 italic bold",
+                                       text='Crime rates on ' + DATE)
+direc_text = canvas.create_text(WIDTH - 100,80,fill="white",
+                                       font="Times 20 italic bold",
+                                       text='Directions:')
+directions = []
 
 def mouse_release(event):
     global DATE, path, crime_val_weight
@@ -194,6 +219,9 @@ def mouse_release(event):
         draw_streets()
         path = graph.dijkstra(SRC, DEST)
         color_path(path)
+        canvas.itemconfig(current_date_text,
+                          text='Crime rates on ' + DATE)
+        redraw_directions(path)
 
     if crime_val_weight != float(weight_scale.get()) / 100:
         crime_val_weight = float(weight_scale.get()) / 100
@@ -201,6 +229,7 @@ def mouse_release(event):
         delete_path(path)
         path = graph.dijkstra(SRC, DEST)
         color_path(path)
+        redraw_directions(path)
 
 def draw_streets():
     # Draw the streets
@@ -215,6 +244,7 @@ def draw_streets():
             canvas.itemconfig(ID, fill=color, width=1)
 
 color_path(path)
+redraw_directions(path)
 
 print('done')
 
