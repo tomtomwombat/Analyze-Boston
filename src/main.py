@@ -80,6 +80,7 @@ DATE = '2015-6-15'
 SRC = random.randint(0, street_map.size - 1)
 DEST = random.randint(0, street_map.size - 1)
 crime_val_weight = 0
+path = []
 
 print(num_cats)
 for i in range(num_cats):
@@ -98,7 +99,7 @@ for street in street_map.streets.values():
     graph.addEdge(street.node1, street.node2, edge_weight)
     graph.addEdge(street.node2, street.node1, edge_weight)
 
-path = graph.dijkstra(SRC, DEST)
+
 
 def update_edge_weights():
     global DATE
@@ -121,6 +122,7 @@ window = tkinter.Tk()
 canvas = tkinter.Canvas(window, bg='black', height=HEIGHT, width=WIDTH)
 canvas.pack(side='left')
 
+# Initial draw of streets
 street_lines = {}
 for street in street_map.streets.values():
     cat1 = colors[street.node1]
@@ -135,6 +137,7 @@ for street in street_map.streets.values():
                                                end_lat, end_long,
                                                fill=color, width=1))
     street_lines[(street.node1, street.node2)] = street_shape
+    
 def redraw_directions(path):
     for d in directions:
         canvas.delete(d)
@@ -243,6 +246,8 @@ def draw_streets():
         for ID in IDs:
             canvas.itemconfig(ID, fill=color, width=1)
 
+rand_src()           
+path = graph.dijkstra(SRC, DEST)
 color_path(path)
 redraw_directions(path)
 

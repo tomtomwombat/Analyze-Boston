@@ -4,6 +4,7 @@ an intersection of streets.
 '''
 
 import json
+import os
 
 WIDTH = 1200  # width of window
 HEIGHT = 800  # height of window
@@ -39,7 +40,8 @@ bad_names = ['Interstate_93__16977', 'Trinity__12530', 'Seymour__12056', 'Albert
              'Post_Office__11583', 'Broadlawn__16986', 'Long_Island__18556', 'Broadlawn__15573', 'Tafts__18561',
              'Trinity__12531', 'Copley__17063', 'Reservoir__18662', 'Ramp__17044', 'Sherman__17039', 'Ramp__17010']
 
-with open('data.json') as json_file:
+data_path = os.path.join(os.path.abspath('../..'), 'Data')
+with open(os.path.join(data_path, 'street_data.json'), 'r') as json_file:
     data = json.load(json_file)
     for k in data:
 
@@ -91,12 +93,12 @@ for lat, long in nodes:
     coord_to_id[(lat, long)] = count
     count += 1
 
-with open('edge_stats.txt', 'w+') as f:
+with open(os.path.join(data_path, 'edge_stats.txt'), 'w+') as f:
     f.write(str(count) + '\n')
     f.write(str(min_lat) + ',' + str(min_long) + '\n')
     f.write(str(max_lat) + ',' + str(max_long) + '\n')
 
-with open('edge_data.csv', 'w+') as f:
+with open(os.path.join(data_path, 'edge_data.csv'), 'w+') as f:
     f.write('NODE1,NODE2,NAME,LENGTH,SPEEDLIMIT,SHAPE\n')
     for i in range(len(lats)):
         street_lats = lats[i]
