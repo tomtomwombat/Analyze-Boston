@@ -1,9 +1,13 @@
-from graph import Graph
+from setup.graph import Graph
 import random
 import tkinter
 import pandas as pd
-from load_streets import Map
+from setup.load_streets import Map
 import math
+import os
+
+data_path = os.path.join(os.path.abspath('..'), 'Data')
+
 
 
 WIDTH = 1100 # width of window
@@ -24,7 +28,7 @@ def canvas_coords(lat, long):
 
 colors = []
 cat_sizes = [0 for i in range(num_cats)]
-with open('node_colors.txt', 'r') as f:
+with open(os.path.join(data_path, 'node_colors.txt'), 'r') as f:
     line = f.read().split(' ')
     for l in line:
         try:
@@ -38,7 +42,7 @@ crime_vals = {}
 min_crime = 10000
 max_crime = -1
 for i in range(num_cats):
-    file_name = 'BiMonthly_Crimes_with_Forecast/monthly_crime%d.csv'%i
+    file_name = os.path.join(data_path, 'BiMonthly_Crimes_with_Forecast/monthly_crime%d.csv'%i)
     predictions = pd.read_csv(file_name)
     for j in range(len(predictions)):
         key = (i,predictions['date'][j])
@@ -212,6 +216,8 @@ def draw_streets():
 
 color_path(path)
 
+print('done')
 
 window.bind('<ButtonRelease-1>', mouse_release)
 window.mainloop()
+print('done')

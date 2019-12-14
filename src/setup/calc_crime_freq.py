@@ -3,8 +3,10 @@ Reads crime data and calculates the average number of crimes per day for each 2 
 '''
 
 import pandas as pd
-from time_series import get_biweekly_dates
+from setup.time_series import get_biweekly_dates
+import os
 
+data_path = os.path.join(os.path.abspath('../..'), 'Data')
 days_per_month = [31, 28, 31, 30,
                   31, 30, 31, 31,
                   30, 31, 30, 31]
@@ -19,7 +21,7 @@ halfmonth_to_days = [sum(days_per_halfmonth[:i]) for i in range(24)]
 
 def calc_crime_counts(num_communities):
     print('reading csv')
-    data = pd.read_csv("colored_crimes.csv")
+    data = pd.read_csv(os.path.join(data_path, 'colored_crimes.csv'))
     print('read csv')
 
     # (date : count) dictionary for each color
@@ -62,7 +64,7 @@ def calc_crime_counts(num_communities):
 
 def write_crime_frequencies(biweekly_crimes, num_communities):
     for i in range(num_communities):
-        with open('BiMonthly_Crimes/monthly_crime' + str(i) + '.csv', 'w+') as f:
+        with open(os.path.join(data_path, 'BiMonthly_Crimes/monthly_crime' + str(i) + '.csv'), 'w+') as f:
             f.write('\"date\",\"freq\"\n')
 
             # We skip the first and last dates because they have incomplete data

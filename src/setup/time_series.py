@@ -2,7 +2,9 @@ import pandas as pd
 from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 import warnings
+import os
 
+data_path = os.path.join(os.path.abspath('../..'), 'Data')
 
 
 warnings.filterwarnings("ignore")
@@ -61,7 +63,7 @@ def predict_crime_freq(df, pred_steps):
 def predict_all_crimes(num_clusters):
 
     for i in range(num_clusters):
-        file_name = 'BiMonthly_Crimes/monthly_crime%d.csv'%i
+        file_name = os.path.join(data_path, 'BiMonthly_Crimes/monthly_crime%d.csv'%i)
 
         # Add data to this data frame
         df = pd.read_csv(file_name)
@@ -81,7 +83,8 @@ def predict_all_crimes(num_clusters):
         pred_dict['date'] = list(df['date']) + pred_dict['date']
         pred_dict['freq'] = list(df['freq']) + pred_dict['freq']
         predicted_crimes = pd.DataFrame(pred_dict)
-        predicted_crimes.to_csv('BiMonthly_Crimes_with_Forecast/monthly_crime%d.csv'%i)
+        p = os.path.join(data_path, 'BiMonthly_Crimes_with_Forecast/monthly_crime%d.csv'%i)
+        predicted_crimes.to_csv(p)
 
 
 

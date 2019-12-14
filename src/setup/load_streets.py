@@ -1,8 +1,10 @@
-from graph import Graph
 import random
 from math import sqrt
 import pandas as pd
-from graph import Graph
+from setup.graph import Graph
+
+import os
+data_path = os.path.join(os.path.abspath('..'), 'Data')
 
 class Street:
     def __init__(self, node1, node2, name, length, speed_limit, coords):
@@ -21,13 +23,13 @@ class Map:
 
         print('Loading map')
         self.streets = {}
-        with open('graph_stats.txt') as f:
+        with open(os.path.join(data_path, 'graph_stats.txt'), 'r') as f:
             lines = f.read().split('\n')
             self.size = int(lines[0])
             self.min_lat, self.min_long = [float(x) for x in lines[1].split(',')]
             self.max_lat, self.max_long = [float(x) for x in lines[2].split(',')]
 
-        edge_data = pd.read_csv("edge_data.csv")
+        edge_data = pd.read_csv(os.path.join(data_path, 'edge_data.csv'))
         for i in range(len(edge_data['NODE1'])):
             node1 = int(edge_data['NODE1'][i])
             node2 = int(edge_data['NODE2'][i])

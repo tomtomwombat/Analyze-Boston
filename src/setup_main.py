@@ -1,7 +1,7 @@
-import load_streets
-import clustering
-import calc_crime_freq
-import time_series
+import setup.load_streets
+import setup.clustering
+import setup.calc_crime_freq
+import setup.time_series
 
 
 WIDTH = 1100
@@ -21,3 +21,6 @@ print('Generated %d files in \'Monthly_Crimes\'')
 
 time_series.predict_all_crimes(num_clusters)
 print('Generated %d files in \'BiMonthly_Crimes_with_Forecast\'')
+
+
+print('done.')
