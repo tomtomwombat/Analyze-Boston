@@ -19,6 +19,8 @@ Spectral clustering on Boston graph with 10 groups:
 The black dots represent an instance of a crime at that location, and the map is overlapped with these crimes. You can see most of the crimes overlap perfectly with a street, but some don't. To match these crimes with a colored group in the graph, I used an algorithm similar to BFS. First, I rounded each of the coordinates of the nodes and placed into a cell of a grid of 1100x700 grid. Then, for each crime I rounded it's coordinates and found its corresponding cell in the grid. If the cell that the crime was in also contained a node, then the crime became the same group as the node. Otherwise the algorithm looked for the closest cell that contained a node using simple search pattern of a an expanding square around the original crime's cell.
 
 (3) Each crime was now associated with a geographical group. The average number of crimes per day on a bi-monthly basis for each cluster was calculated and stored in Data/BiMonthly_Crimes.csv. The first thing I noticed was that crimes rate are seasonal. I think this is because people are generally more likely to be out and about during warmer temperatures and at home during the cold.
+Below is the collective crime rates for each cluster.
 ![monthly](https://github.com/thomaspendock/Analyze-Boston/blob/master/Images/monthly_crimes.png)
-
-Using the SARIMAX model from the statsmodels I 
+Below is the bi-monthly crimes rates for a single cluster.
+`![bimonthly](https://github.com/thomaspendock/Analyze-Boston/blob/master/Images/bimonthly_crimes.png)`
+Because the frequencies are seasonal, I decided to use time series analysis, specifically the SARIMAX model from the statsmodels library. 
