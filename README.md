@@ -1,2 +1,2 @@
 # Analyze-Boston
-The goal of this project was to a path planning algorithm exclusive to Boston that avoiding areas with frequent crime.
+The goal of this project was to a path planning algorithm exclusive to Boston that avoiding areas with frequent crime. The project uses Boston crime data since 2015 and Boston street map data, both pulled from https://data.boston.gov/. The crimes.csv file was to large to add to the GitHub repo, so here is the link: https://data.boston.gov/dataset/crime-incident-reports-august-2015-to-date-source-new-system.
