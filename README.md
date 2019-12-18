@@ -46,6 +46,17 @@ It is less clear that the frequencies for a specifc cluster is seasonal, however
 
 There is a trade off with number of clusters and accuracy of the predictions. Obviosuly the predictions and seasonality are more obvious when using all the crime data, but a single cluster would not help much trying to disguish different geographical locations from each other based off of crime. If a 100 clusters were used I would have high "resolution" in the graph but the edge weights would not be accurate as I would not have much data for each SARIMA model. I chose 15 clusters because I thought it was the middle ground, this is just arbitrary. 
 
+Finally I had the historical crime frequenceis and the predicted crime frequencies for all 15 clusters in Boston. Each edge of nodes u and v was weighted by a linear combination of its "crime value" and length. The crime value was determined by the crime rate of the cluster u was in plus the crime rate of the cluster v was in and divided by two and then multilied by the length of the street. This was to ensure that when crossing a high crime rate area that the shortest path is taken within that area. When drawing the map I colored the clusters based on their crime rates. Red mean higher crime rate and green means lower crime rate. As you change the time scale you can see that colors of each cluster change slightly. The % crime weight slider changes the values of the edges by adjusting the weight of the crime value and length. So if % crime weight was at 50 then the value of each edge is `.5*crime_value + .5*length`.
+
+The graph search algorithm used was Dijkstra's algorithm which is a good algorithm to find minimum path from A to B in a graph. Below is the path when the % crime weight is 0, meaning that the path completly ignored the crime rates of the streets. ![comp1](https://github.com/thomaspendock/Analyze-Boston/blob/master/Images/compare1.png)
+You can see that the path goes straight through the red area (high crime area). After turing the % crime weight to 100, the length of the path is ignored and the crime rates are fully considered. 
+![comp2](https://github.com/thomaspendock/Analyze-Boston/blob/master/Images/compare2.png)
+You can see that the red region is totally avoided! Instead the algorithm finds a safer route through the greener areas around the red region.
+
+# Further improvements
+The main improvment I thought of was a path planning algorithm that considered the time of day. It is quite obvious that the crime frequencies during the day are not random. Below is a plot of the number of crimes into total since 2015 vs when in the day they occurred. 
+![hour](https://github.com/thomaspendock/Analyze-Boston/blob/master/Images/crimes_per_hour.png) 
+You can see that minimum rate is around 4am to 6am and the maximum is during the afternon. The "spikey" nature is interesting. I think this is because police officers are more likely to record the time as a whole number for example 12:00 instead of 12:03, hence the upward spike during whole number hours.
 
 
 
