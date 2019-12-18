@@ -1,6 +1,6 @@
-# A Python program for Dijkstra's shortest
-# path algorithm for adjacency
-# list representation of graph
+# This code modified from
+# code contributed by Divyanshu Mehta on
+# https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/
 
 from collections import defaultdict
 import sys

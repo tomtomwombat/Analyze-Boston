@@ -1,11 +1,8 @@
 from setup.graph import Graph
 import random
-import tkinter
 from math import sqrt
 import pandas as pd
 import numpy as np
-import scipy
-from sklearn.cluster import KMeans
 from sklearn.cluster import spectral_clustering
 from setup.load_streets import Map
 import os
@@ -14,9 +11,7 @@ data_path = os.path.join(os.path.abspath('../..'), 'Data')
 
 def cluster_graph(street_map, number_clusters):
     A = np.array(street_map.get_adj_matrix())
-    print('clustering') # This takes a while!
     colors = spectral_clustering(A, n_clusters=number_clusters)
-    print('done')
 
     with open(os.path.join(data_path, 'node_colors.txt'), 'w+') as f:
         for c in colors:
@@ -91,9 +86,7 @@ def cluster_crimes(street_map, width, height):
     crime_table = open(os.path.join(data_path, 'colored_crimes.csv', 'w+'))
     crime_table.write('LAT,LONG,TIME,COLOR\n')
 
-    print('Loading crime csv...')
     data = pd.read_csv(os.path.join(data_path, 'crimes.csv'))
-    print('Loaded crime csv.')
 
     for i in range(len(data['Lat'])):
         try:
