@@ -44,7 +44,7 @@ def predict_crime_freq(df, pred_steps):
     y = df['freq']
 
     my_order = (2, 1, 1)
-    my_seasonal_order = (2, 1, 0, 12)
+    my_seasonal_order = (2, 1, 0, 24)
     mod = SARIMAX(y,
                   order=my_order,
                   seasonal_order=my_seasonal_order,
