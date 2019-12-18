@@ -8,8 +8,11 @@ Before anything could be done, I needed to parse the "street_data.json" into a g
 
 The project uses 3 main algorithms: Dijkstra's, spectral clustering, and sarimax. I have already studied Dijkstra's algorithm, but spectral clustering and sarimax was new to me and I wanted to learn and use them.
 
+## Setup
 The bulk of the computational math in the project is setting up the clusters and crime predictions. "setup_main.py" orchestrates the whole process.
-(1) This runs the spectral clustering algorithm on the graph. The Map object in "load_streets.py" produced an adjacency matrix A, where A[i][j] = A[j][i] and A[i][j] is 1/d, where d is the distance from node i to node j. D is the diagonal degree matrix, where D[i][i] is the number of edges coming out of node i. The laplacian matrix, L, is defined as D - A, and is also symmetric. The normalized laplacian, Lnorm, is defined as I - (D^-1/2)L((D^-1/2)). The k eigenvectors corresponding to the k smallest eigenvalues of Lnorm become n points in k dimensions where the entries of point i are the ith entries of each of the k eigenvectors. These points are fed into a standard clustering algorithm such as k-means.
+
+### Spectral Clustering
+This runs the spectral clustering algorithm on the graph. The Map object in "load_streets.py" produced an adjacency matrix A, where `A[i][j] = A[j][i]` and `A[i][j] = 1/d`, where `d` is the distance from node `i` to node `j`. `D` is the diagonal degree matrix, where `D[i][i]` is the number of edges coming out of node `i`. The laplacian matrix, `L`, is defined as `D - A`, and is also symmetric. The normalized laplacian, Lnorm, is defined as `I - (D^-1/2)L((D^-1/2))`. The k eigenvectors corresponding to the k smallest eigenvalues of Lnorm become n points in k dimensions where the entries of point i are the ith entries of each of the k eigenvectors. These points are fed into a standard clustering algorithm such as k-means.
 
 Spectral clustering on Boston graph with 10 groups:
 ![An example of spectral clustering on the Boston streets](https://github.com/thomaspendock/Analyze-Boston/blob/master/Images/cluster.png)
