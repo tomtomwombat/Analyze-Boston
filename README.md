@@ -35,8 +35,17 @@ The ARIMA model is the AR itegrated with the MA. The 3 parameters of an ARIMA mo
 
 Finally a seasonaly component must be added. The difference between seasonal and cyclic behavior is that seasonal is cyclic but alligned with the seasons or months. The new paramenters of the SARIMA model are (P,D,Q) and m. m is number of observations per year, so if crimes frequencies were recorded monthly m would be 12 and for this project crime frequencies were calculated bi monthly so m is 24.
 
-
-
 To find the best (p,d,q) and (P,D,Q) parameters for the model I used a "grid search" meaning that I tried all combinations of the parameters over a small range and compared their performance. The performance of the model with certain parameters was measured by the Akaike’s Information Criterion (AIC). AIC = -2log(L) + 2(p + q + k + 1). L is a likelyhood function of y, the data, and k = 0 if c = 0 else k = 1.
 
-After picking the set of parameters with the smallest AIC, I then predicted the crime frequencies about 2 years into the future for each geographical cluster. The uncertaintity of the SARIMA model's predictions increases the further into the future they are. The image below is an example plot of such prediction.
+After picking the set of parameters with the smallest AIC, I tested it on all the crimes in Boston. 
+![pred 1](https://github.com/thomaspendock/Analyze-Boston/blob/master/Images/monthly_prediction.png)
+
+Using the same model  I then predicted the crime frequencies about 2 years into the future for each geographical cluster. The image below is an example plot of such prediction.
+![pred 1](https://github.com/thomaspendock/Analyze-Boston/blob/master/Images/bimonthly_predictions.png)
+It is less clear that the frequencies for a specifc cluster is seasonal, however you can see a slight peak every 24 halfmonths after the starting point of August (summer is highest frequencies of crimes). The orange prediction line predicts a spike around 120 half months after August 2015, which is the summer of 2020. The uncertaintity of the SARIMA model's predictions increases the further into the future they are. 
+
+There is a trade off with number of clusters and accuracy of the predictions. Obviosuly the predictions and seasonality are more obvious when using all the crime data, but a single cluster would not help much trying to disguish different geographical locations from each other based off of crime. If a 100 clusters were used I would have high "resolution" in the graph but the edge weights would not be accurate as I would not have much data for each SARIMA model. I chose 15 clusters because I thought it was the middle ground, this is just arbitrary. 
+
+
+
+
