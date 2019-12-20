@@ -82,12 +82,6 @@ DEST = random.randint(0, street_map.size - 1)
 crime_val_weight = 0
 path = []
 
-print(num_cats)
-for i in range(num_cats):
-    print(crime_vals[(i,DATE)])
-print(min_crime, max_crime)
-
-
 graph = Graph(street_map.size)
 for street in street_map.streets.values():
     cat1 = colors[street.node1]

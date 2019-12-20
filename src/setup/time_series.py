@@ -4,7 +4,7 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 import warnings
 import os
 
-data_path = os.path.join(os.path.abspath('../..'), 'Data')
+data_path = os.path.join(os.path.abspath('..'), 'Data')
 
 
 warnings.filterwarnings("ignore")

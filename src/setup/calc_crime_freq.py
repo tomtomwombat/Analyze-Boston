@@ -6,7 +6,7 @@ import pandas as pd
 from setup.time_series import get_biweekly_dates
 import os
 
-data_path = os.path.join(os.path.abspath('../..'), 'Data')
+data_path = os.path.join(os.path.abspath('..'), 'Data')
 days_per_month = [31, 28, 31, 30,
                   31, 30, 31, 31,
                   30, 31, 30, 31]
@@ -28,7 +28,6 @@ def calc_crime_counts(num_communities):
     biweekly_crimes = [{} for i in range(num_communities)]
     all_dates = get_biweekly_dates((2015, 6, 1), 102)
     for d in all_dates:
-        print(d)
         for i in range(num_communities):
             k = tuple([int(x) for x in d.split('-')])
             biweekly_crimes[i][k] = 0
@@ -63,8 +62,10 @@ def calc_crime_counts(num_communities):
     return biweekly_crimes
 
 def write_crime_frequencies(biweekly_crimes, num_communities):
+    print(len(biweekly_crimes))
     for i in range(num_communities):
-        with open(os.path.join(data_path, 'BiMonthly_Crimes/monthly_crime' + str(i) + '.csv'), 'w+') as f:
+        path = os.path.join(data_path, 'BiMonthly_Crimes/monthly_crime' + str(i) + '.csv')
+        with open(path, 'w+') as f:
             f.write('\"date\",\"freq\"\n')
 
             # We skip the first and last dates because they have incomplete data
